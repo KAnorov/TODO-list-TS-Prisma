@@ -141,6 +141,7 @@ export default function TodoList() {
         setTodoData({ text: '', checked: false, id: 0 });
         setEditingTodoId(null);
     };
+    
     return <>
         <div className="container" >
             <div
