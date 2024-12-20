@@ -3,7 +3,7 @@ import { ChangeEvent, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import ListForm from '@/components/ListForm';
 import TDListModal from '@/components/TDListModal';
-import { ToDo} from '@prisma/client';
+import { Todo} from '@prisma/client';
 
 const URL_APP = '/api/todos';
 
@@ -13,7 +13,7 @@ type TodoData = {
     id: number;
 };
 
-async function fetcher(url: string | URL): Promise<ToDo[]> {
+async function fetcher(url: string | URL): Promise<Todo[]> {
     const response = await fetch(url);
     console.log('fetcher=', response);
     if (!response.ok) {
@@ -27,7 +27,7 @@ export default function TodoList() {
     const [todoData, setTodoData] = useState<TodoData>({ text: '', checked: false, id: 0 });
     const [editingTodoId, setEditingTodoId] = useState<number | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { data: todo, error, isValidating, isLoading, mutate } = useSWR<ToDo[]>(URL_APP, fetcher);
+    const { data: todo, error, isValidating, isLoading, mutate } = useSWR<Todo[]>(URL_APP, fetcher);
 
     const addTodo = async (todo: { id: number; text: string; checked: boolean }) => {
         const response = await fetch(URL_APP, {
@@ -61,7 +61,7 @@ export default function TodoList() {
         const newTodo = { ...todoData, id: Date.now() };
         mutate((currentTodos) => [...(currentTodos || []), newTodo], false);
         try {
-            const addedTodo: ToDo = await addTodo(todoData);
+            const addedTodo: Todo = await addTodo(todoData);
             toast.success('Задание успешно добавлено');
             mutate((currentTodos) => currentTodos?.map((todo) => todo.id === newTodo.id ? { ...todo, id: addedTodo.id } : todo), false);
             setTodoData({ text: '', checked: false, id: 0 });
@@ -74,7 +74,7 @@ export default function TodoList() {
         mutate();
 
     };
-    const handleDeleteTodo = async (id: null | ToDo['id']) => {
+    const handleDeleteTodo = async (id: null | Todo['id']) => {
         try {
             const response = await fetch(`${URL_APP}/${id}`, { method: 'DELETE' });
             if (!response.ok) {
@@ -130,7 +130,7 @@ export default function TodoList() {
         setEditingTodoId(null);
         setIsModalOpen(true);
     };
-    const openModalForEdit = (todo: ToDo) => {
+    const openModalForEdit = (todo: Todo) => {
         setEditingTodoId(todo.id);
         setTodoData({ text: todo.text, checked: todo.checked, id: todo.id });
         setIsModalOpen(true);
