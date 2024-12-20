@@ -3,7 +3,7 @@ import { ChangeEvent, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import ListForm from '@/components/ListForm';
 import TDListModal from '@/components/TDListModal';
-import { Todo} from '@prisma/client';
+import { Todo } from '@prisma/client';
 
 const URL_APP = '/api/todos';
 
@@ -43,7 +43,7 @@ export default function TodoList() {
 
         return response.json();
     };
-    const editTodo = async (id: number | null , todo: { id: number; text: string; checked: boolean }) => {
+    const editTodo = async (id: number | null, todo: { id: number; text: string; checked: boolean }) => {
         const response = await fetch(`${URL_APP}/${id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -68,7 +68,7 @@ export default function TodoList() {
             setIsModalOpen(false);
         } catch (error: unknown) {
             if (error instanceof Error)
-             toast.error(error.message);
+                toast.error(error.message);
             mutate((currentTodos) => currentTodos?.filter((todo) => todo.id !== newTodo.id), false);
         }
         mutate();
@@ -84,7 +84,7 @@ export default function TodoList() {
             mutate();
         } catch (error: unknown) {
             if (error instanceof Error)
-            toast.error(error.message);
+                toast.error(error.message);
         }
     };
     const handleEditTodo = async () => {
@@ -101,7 +101,7 @@ export default function TodoList() {
             mutate();
         } catch (error: unknown) {
             if (error instanceof Error)
-            toast.error(error.message);
+                toast.error(error.message);
         }
     };
     const handleChange = (field: keyof TodoData) => async (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -120,7 +120,8 @@ export default function TodoList() {
                 }
                 const data = await response.json();
                 console.log('Задача обновлена:', data);
-            } catch (error) {
+            } catch (error: unknown) {
+                if (error instanceof Error)
                 console.error('Ошибка:', error);
             }
         }
@@ -145,8 +146,7 @@ export default function TodoList() {
 
             <div
                 style={{ position: 'absolute', fontSize: 'xxx-large', top: '200px' }}>
-                {isLoading && '⌛'
-                }
+                {isLoading && '⌛'}
                 {isValidating && '👁'}
                 {error && `💀 ${error.toString()}`}
             </div>
