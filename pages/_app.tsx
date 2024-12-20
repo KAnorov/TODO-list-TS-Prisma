@@ -1,6 +1,20 @@
-import "@/styles/globals.css";
-import type { AppProps } from "next/app";
+import Header from "@/components/Header";
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+import "@/styles/globals.css";
+import { SessionProvider } from "next-auth/react";
+import type { AppProps } from "next/app";
+import { Toaster } from "react-hot-toast";
+
+export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps)  {
+  return <>
+  
+  <SessionProvider session={session}>
+  <Header />
+  <Component {...pageProps} />
+  <Toaster />
+
+  </SessionProvider>
+  
+  </> 
 }
+ 

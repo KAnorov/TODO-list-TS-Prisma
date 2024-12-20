@@ -1,11 +1,17 @@
-import ToDoList from "@/components/TodoList";
-
+import Head from "next/head";
+import { useSession } from "next-auth/react"
 
 
 export default function Home() {
-  return <>
-    <h1 style={{ textAlign: 'center'}}>My ToDo</h1>
-    <ToDoList />
-  </>;
-
+  const { data: session } = useSession()
+  if (session) {
+return<>
+ <Head>
+      <title>ToDo</title>
+    </Head>
+</>
+  }
+  return<>
+  <div>Войдите в аккаунт</div>
+  </>
 }
