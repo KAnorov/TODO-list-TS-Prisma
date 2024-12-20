@@ -12,7 +12,6 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
   <Header />
   <Component {...pageProps} />
   <Toaster />
-
   </SessionProvider>
   
   </> 
