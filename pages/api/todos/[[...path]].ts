@@ -13,16 +13,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     switch (req.method) {
       case 'GET':
         res.setHeader('content-type', 'application/json; charset=utf-8');
-        const todos = await prisma.todo.findMany({ orderBy: [{ id: 'asc' }] });
-        return res.json(todos);
+        const ToDos = await prisma.todo.findMany({ orderBy: [{ id: 'asc' }] });
+        return res.json(ToDos);
       case 'POST':
         const
           text:string = req.body.text;
         await prisma.todo.create({ data: { text } });
         return res.status(201).json({});
       case 'PUT':
-        const updatedTodo = req.body.text;
-        await prisma.todo.update({ where: { id }, data: { text: updatedTodo  } });
+        const updatedToDo = req.body.text;
+        await prisma.todo.update({ where: { id }, data: { text: updatedToDo  } });
         return res.json({});
       case 'DELETE':
         await prisma.todo.delete({ where: { id } });
