@@ -21,6 +21,7 @@ export default function ListForm({ todoData, editingTodoId, handleAddTodo, handl
             <fieldset>
                 <h3>{editingTodoId ? 'Редактировать задание?' : 'Добавить задание?'}</h3>
                 <textarea
+                
                     placeholder="Введите текст..."
                     value={text}
                     onChange={handleChange('text')}
