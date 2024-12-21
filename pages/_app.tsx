@@ -10,7 +10,6 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
   <Component {...pageProps} />
   </SessionProvider>
   <Toaster />
-  <TodoList /> Добавил специально для проверки ДЗ предыдущей, на случай если не сработает авторизация!
   </> 
 }
  
